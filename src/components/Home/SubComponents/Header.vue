@@ -1,0 +1,131 @@
+<template>
+  <div class="Header container-fluid d-none d-sm-block">
+    <a href="#" alt="logo" title="logo">
+    <img src="../../../assets/yangguang.png" alt="logo" class="Header-img  "/>
+    </a>
+    <span class="Header-shouye">首  页</span>
+    <div class="Header-search">
+      <div class="input-group ">
+        <input type="text" v-model="SearchValue" class="form-control"  aria-label="Example text with button addon" aria-describedby="button-addon1">
+        <div class="input-group-prepend">
+          <button class="btn btn-outline-secondary" type="button" id="button-addon1" @click="Search()">搜索</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  export default{
+    data(){
+      return{
+        SearchValue:""
+      }
+    },
+    methods:{
+      Search(){
+        this.$emit("Search",this.SearchValue.trim())
+      }
+    }
+  }
+</script>
+
+<style scoped="scoped" >
+@media (max-width: 575.98px) {
+
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .Header-img{
+    left: 150px;
+  }
+  .Header-shouye{
+    left: 230px;
+  }
+  .Header-search{
+    width: 300px;
+    left: 350px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .Header-img{
+    left: 150px;
+  }
+  .Header-shouye{
+     left: 230px;
+  }
+  .Header-search{
+    width: 400px;
+    left: 350px;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .Header-img{
+    left: 200px;
+  }
+  .Header-shouye{
+    left: 275px;
+  }
+  .Header-search{
+    width: 500px;
+    right: 50px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .Header-img{
+    left: 200px;
+  }
+  .Header-shouye{
+    left:275px;
+  }
+  .Header-search{
+    width: 500px;
+    right: 100px;
+  }
+}
+
+.Header{
+  position: absolute;
+  height: 50px;
+  padding: 0;
+  top: 0;
+  background-color:#1C2327;
+  box-shadow: 0px 1px 3px rgba(0,0,0,0.5);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.Header-img{
+  width: 50px;
+  height: 100%;
+  position: absolute;
+  border-radius: 50% 50%;
+  cursor: pointer;
+}
+.Header-shouye{
+  display: inline-block;
+  height: 100%;
+  width: 80px;
+  text-align: center;
+  font-size: 16px;
+  color: white;
+  position: absolute;
+  line-height: 50px;
+  cursor: pointer;
+  border-radius: 2px;
+}
+.Header-shouye:hover{
+  color: sandybrown;
+}
+.Header-search{
+  position: absolute;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+</style>
