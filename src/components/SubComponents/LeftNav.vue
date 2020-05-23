@@ -8,6 +8,7 @@
 </template>
 
 <script>
+  import {mapActions} from "vuex";
   export default{
     data(){
       return{
@@ -19,20 +20,7 @@
          {id:5,keywords:"Vue"},
          {id:6,keywords:"Node"},
          {id:7,keywords:"其他"}
-        ],
-        WenzhangimgList:[
-          "https://i.picsum.photos/id/10/2500/1667.jpg",
-          "https://i.picsum.photos/id/1000/5626/3635.jpg",
-          "https://i.picsum.photos/id/0/5616/3744.jpg",
-          "https://i.picsum.photos/id/100/2500/1656.jpg",
-          "https://i.picsum.photos/id/1020/4288/2848.jpg",
-          "https://i.picsum.photos/id/1024/1920/1280.jpg",
-          "https://i.picsum.photos/id/1019/5472/3648.jpg",
-          "https://i.picsum.photos/id/1015/6000/4000.jpg",
-          "https://i.picsum.photos/id/1037/5760/3840.jpg"
-        ],
-        pageIndex:1,
-        WenzhangList:[]
+        ]
       }
     },
     methods:{
@@ -40,38 +28,19 @@
         let sort;
         if(keywords=="其他"){
           sort="qita";
-          // this.$router.push("/sort/qita");
+          this.setSortWenzhangList(sort)
         }else{
           sort=keywords;
-          // this.$router.push("/sort/"+keywords);
+          this.setSortWenzhangList(sort)
         }
-        this.axios.get("/api/youke/wenzhang/select/sorts",{
-          params:{
-            sort:sort,
-            pageIndex:this.pageIndex
-          }
-        }).then((res)=>{
-           let newList=[];
-           if(res.data.status==0){
-             if(!res.data.result.length){
-               this.WenzhangList=[]
-               return
-             }
-             newList=res.data.result;
-             let index=this.pageIndex*10;
-             newList.forEach((item)=>{
-               index=index>this.WenzhangimgList.length-1?0:index;
-               item.ImgSrc=this.WenzhangimgList[index];
-               index++;
-             })
-             this.WenzhangList=newList;
-           }
-        })
         this.$refs.li.forEach(function(item){
           item.classList.remove("active")
         })
         this.$refs.li[id].classList.add("active")
-      }
+      },
+      ...mapActions([
+        "setSortWenzhangList"
+      ])
     },
     computed:{
 

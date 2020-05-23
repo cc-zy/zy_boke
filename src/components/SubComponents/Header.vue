@@ -1,9 +1,9 @@
 <template>
   <div class="Header container-fluid d-none d-sm-block">
     <a href="#" alt="logo" title="logo">
-    <img src="../../../assets/yangguang.png" alt="logo" class="Header-img  "/>
+    <img src="../../assets/yangguang.png" alt="logo" class="Header-img  "/>
     </a>
-    <span class="Header-shouye">首  页</span>
+    <span class="Header-shouye" @click="GoHome()">首  页</span>
     <div class="Header-search">
       <div class="input-group ">
         <input type="text" v-model="SearchValue" class="form-control"  aria-label="Example text with button addon" aria-describedby="button-addon1">
@@ -25,6 +25,9 @@
     methods:{
       Search(){
         this.$emit("Search",this.SearchValue.trim())
+      },
+      GoHome(){
+        location.reload()
       }
     }
   }

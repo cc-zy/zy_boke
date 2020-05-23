@@ -1,11 +1,18 @@
 <template>
   <div class="Home">
     <Header v-on:Search="Search"></Header>
-    <left-nav class="position" :class="{leftscroll}"></left-nav>
-    <Carousel class="carousel-position"></Carousel>
-    <hot-bar class="hotbar-position"></hot-bar>
-    <guess-bar class="guessbar-position"></guess-bar>
-    <wenzhang-list class="wenzhanglist-position"></wenzhang-list>
+    <div class="Home-body">
+      <left-nav class="leftnav-position" :class="{leftscroll}"></left-nav>
+      <div class="Home-body-center">
+        <Carousel class="carousel-position"></Carousel>
+        <wenzhang-list class="wenzhanglist-position" ></wenzhang-list>
+      </div>
+      <div class="Home-body-right">
+        <hot-bar class="hotbar-position"></hot-bar>
+        <guess-bar class="guessbar-position"></guess-bar>
+      </div>
+    </div>
+    <Footer class="footer"></Footer>
     <div class="BackTop" :class="{ScrollBackTop}" @click="GoBackTop()">
       <img src="../../assets/backtop.png" title="返回顶部" alt=""/>
       <p>返回顶部</p>
@@ -14,12 +21,13 @@
 </template>
 
 <script>
-  import Header from "./SubComponents/Header.vue";
-  import LeftNav from "./SubComponents/LeftNav.vue";
-  import Carousel from "./SubComponents/Carousel.vue";
-  import HotBar from "./SubComponents/HotBar.vue";
-  import GuessBar from "./SubComponents/GuessBar.vue";
-  import WenzhangList from "./SubComponents/WenzhangList.vue";
+  import Header from "../SubComponents/Header.vue";
+  import LeftNav from "../SubComponents/LeftNav.vue";
+  import Carousel from "../SubComponents/Carousel.vue";
+  import HotBar from "../SubComponents/HotBar.vue";
+  import GuessBar from "../SubComponents/GuessBar.vue";
+  import WenzhangList from "../SubComponents/WenzhangList.vue";
+  import Footer from "../SubComponents/Footer.vue";
   export default{
     data(){
       return {
@@ -36,13 +44,19 @@
       Carousel,
       HotBar,
       GuessBar,
-      WenzhangList
+      WenzhangList,
+      Footer
+    },
+    computed:{
+
     },
     methods:{
       GoBackTop(){
         window.scrollTo(0,0);
       },
       Search(SearchValue){
+        alert(SearchValue)
+        this.$router.push("/search");
         const that=this;
         if(SearchValue!=""){
           this.axios.post('/api/youke/sousuo', {
@@ -60,11 +74,7 @@
       },
       addScroll(){
         window.addEventListener("scroll",()=>{
-          if(window.pageYOffset>=100){
-            this.leftscroll=true
-          }else if(window.pageYOffset<=200){
-            this.leftscroll=false
-          }
+
           if(window.pageYOffset<100){
             this.ScrollBackTop=true
           }else if(window.pageYOffset>=100){
@@ -85,71 +95,29 @@
   }
 
   @media (min-width: 576px) and (max-width: 767.98px) {
-      .carousel-position{
-        left: 140px;
-      }
-      .hotbar-position{
-        right: 10px;
-      }
-      .guessbar-position{
-        right: 10px;
-      }
-      .wenzhanglist-position{
-        left:140px;
-      }
+
   }
 
   @media (min-width: 768px) and (max-width: 991.98px) {
-        .carousel-position{
-          left: 170px;
-        }
-        .hotbar-position{
-          right: 30px;
-        }
-        .guessbar-position{
-          right: 30px;
-        }
-        .wenzhanglist-position{
-          left:170px;
-        }
+
   }
 
   @media (min-width: 992px) and (max-width: 1199.98px) {
-      .position{
-         left: 100px;
-       }
-       .carousel-position{
-         left: 250px;
-       }
-       .hotbar-position{
-         right: 20px;
-       }
-       .guessbar-position{
-         right: 20px;
-       }
+
        .wenzhanglist-position{
-         left:250px;
          width: 200px;
        }
   }
 
   @media (min-width: 1200px) {
-    .position{
-       left: 200px;
-     }
-     .carousel-position{
-       left: 350px;
-     }
-     .hotbar-position{
-       left: 1050px;
-     }
-     .guessbar-position{
-       left: 1050px;
-     }
-     .wenzhanglist-position{
-       left:350px;
-     }
+
   }
+.footer{
+  margin-top: 100px;
+}
+.Home-body{
+  display: flex;
+}
 .ScrollBackTop{
   display: none;
 }
@@ -171,30 +139,19 @@
   color: salmon;
 }
 .wenzhanglist-position{
-  position: absolute;
-  top: 300px;
 }
-.Home{
-    position: relative;
- }
-.position{
-  position: absolute;
-  top: 100px;
+
+.leftnav-position{
+  margin-top: 100px;
+  margin-left: 200px;
 }
-.leftscroll{
-  position: fixed;
-  top: 0px;
+.Home-body-center{
+  margin-top: 100px;
+  margin-left: 20px;
 }
-.carousel-position{
-  position: absolute;
-  top: 100px;
+.Home-body-right{
+  margin-top: 100px;
+  margin-left: 20px;
 }
-.hotbar-position{
-  position: absolute;
-  top: 100px;
-}
-.guessbar-position{
-  position: absolute;
-  top: 500px;
-}
+
 </style>

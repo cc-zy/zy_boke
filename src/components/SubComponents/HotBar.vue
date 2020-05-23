@@ -85,7 +85,8 @@
   }
   .HotBar-title{
     position: relative;
-    margin: 10px 20px;
+    padding: 10px 0;
+    margin: 0 20px;
     border-bottom: 2px solid rgba(0,0,0,0.1);
   }
   .HotBar-title:after{

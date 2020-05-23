@@ -21,10 +21,12 @@ Vue.filter("TimeFormat",function(time){
    return year+":"+month+":"+day+"  "+hours+":"+minutes+":"+seconds;
 })
 Vue.use(VueAxios, axios)
+import store from "./store/index.js";
 
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })
