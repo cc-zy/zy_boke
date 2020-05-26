@@ -11,6 +11,9 @@
         <div class="carousel-item">
           <img :src="CarImgs.img3" class="d-block w-100  imgs" alt="...">
         </div>
+        <div class="carousel-item">
+          <img :src="CarImgs.img4" class="d-block w-100  imgs" alt="...">
+        </div>
       </div>
         <a class="carousel-control-prev"  role="button" data-slide="prev" @click="Prev()" >
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -30,9 +33,10 @@
     data(){
       return{
         CarImgs:{
-          img1:"//goss1.cfp.cn/creative/vcg/400/new/VCG41N1199633166.jpg",
-          img2:"//goss1.cfp.cn/creative/vcg/400/new/VCG41N1199633166.jpg",
-          img3:"//goss1.cfp.cn/creative/vcg/400/new/VCG41N1199633166.jpg"
+          img1:"https://i.picsum.photos/id/1025/4951/3301.jpg",
+          img2:"https://i.picsum.photos/id/1023/3955/2094.jpg",
+          img3:"https://i.picsum.photos/id/1028/5184/3456.jpg",
+          img4:"https://i.picsum.photos/id/1037/5760/3840.jpg"
         }
       }
     },

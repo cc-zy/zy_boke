@@ -4,7 +4,7 @@
       <h5>热门推荐</h5>
     </div>
     <ul>
-      <li v-for="(item,index) in HotBarList" class="HotBar-li"><span>{{index+1}}</span> {{item.wenzhang_title}}</li>
+      <li v-for="(item,index) in HotBarList" class="HotBar-li" @click="ShowWen(item.wenzhang_id)"><span>{{index+1}}</span> {{item.wenzhang_title}}</li>
     </ul>
   </div>
 </template>
@@ -32,6 +32,9 @@
             this.HotBarList=res.data.result
           }
         })
+      },
+      ShowWen(id){
+        this.$emit("ShowWen",id)
       }
     }
 

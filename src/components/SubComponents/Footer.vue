@@ -1,5 +1,5 @@
 <template>
-  <div class="Footer">
+  <div class="Footer  d-none d-sm-block">
     <div class="Footer-header">
       <div class="Footer-imgs">
         <div class="Footer-imgs-item1">
@@ -43,6 +43,82 @@
 </script>
 
 <style scoped="scoped">
+ @media (max-width: 575.98px) {
+
+  }
+
+  @media (min-width: 576px) and (max-width: 767.98px) {
+    .Footer-imgs-item1{
+      margin-left: 10px;
+    }
+    .Footer-content{
+      margin-left: 10px;
+    }
+    .Footer-imgs-item2{
+      margin-left: 10px;
+    }
+    .Footer-content{
+      font-size: 11px ;
+    }
+    .Footer-footer{
+      font-size: 10px;
+    }
+  }
+
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    .Footer-imgs-item1{
+      margin-left: 50px;
+    }
+    .Footer-content{
+      margin-left: 20px;
+    }
+    .Footer-imgs-item2{
+      margin-left: 20px;
+    }
+    .Footer-content{
+      font-size: 13px ;
+    }
+    .Footer-footer{
+      font-size: 12px;
+    }
+  }
+
+  @media (min-width: 992px) and (max-width: 1199.98px) {
+    .Footer-imgs-item1{
+      margin-left: 200px;
+    }
+    .Footer-content{
+      margin-left: 50px;
+    }
+    .Footer-imgs-item2{
+      margin-left: 30px;
+    }
+    .Footer-content{
+      font-size: 13px ;
+    }
+    .Footer-footer{
+      font-size: 13px;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .Footer-content{
+      margin-left: 100px;
+
+    }
+    .Footer-imgs-item1{
+      margin-left: 300px;
+    }
+    .Footer-imgs-item2{
+      margin-left: 30px;
+    }
+    .Footer-content{
+      font-size: 14px;
+    }
+    .Footer-footer{
+      font-size: 13px;
+    }
+  }
 .Footer{
   width: 100%;
   background-color: slategray;
@@ -52,7 +128,6 @@
   display: flex;
 }
 .Footer-content{
-  margin-left: 100px;
   color:black;
   margin-top: 20px;
 }
@@ -66,12 +141,7 @@
   height: 100px;
   border-radius: 5px;
 }
-.Footer-imgs-item1{
-  margin-left: 300px;
-}
-.Footer-imgs-item2{
-  margin-left: 30px;
-}
+
 .Footer-imgs-item1 p{
   text-align: center;
   color: black;

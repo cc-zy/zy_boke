@@ -1,7 +1,7 @@
 <template>
   <div class="Header container-fluid d-none d-sm-block">
     <a href="#" alt="logo" title="logo">
-    <img src="../../assets/yangguang.png" alt="logo" class="Header-img  "/>
+    <img src="../../assets/yangguang.png" alt="阳光" class="Header-img  "/>
     </a>
     <span class="Header-shouye" @click="GoHome()">首  页</span>
     <div class="Header-search">
@@ -16,19 +16,42 @@
 </template>
 
 <script>
+  import {mapState,mapActions} from "vuex";
   export default{
     data(){
       return{
         SearchValue:""
       }
     },
+   props:["used"],
+   computed:{
+     ...mapState(["SValue"])
+   },
     methods:{
+      ...mapActions(["setSearchWenList"]),
       Search(){
-        this.$emit("Search",this.SearchValue.trim())
+        if(this.SearchValue==""){
+          this.$message({
+            message: '输入内容不能为空!',
+            type: 'warning',
+            duration:1000
+          });
+          return;
+        }
+        this.setSearchWenList(this.SearchValue)
+        if(this.used=="home"){
+          this.$router.push("/search");
+        }
       },
       GoHome(){
         location.reload()
       }
+    },
+    created(){
+      if(this.used=="home"){
+        return
+      }
+      this.SearchValue=this.SValue;
     }
   }
 </script>

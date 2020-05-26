@@ -4,7 +4,7 @@
       <h5>猜你喜欢</h5>
     </div>
     <ul>
-      <li v-for="(item,index) in HotBarList" class="GuessBar-li">{{item.wenzhang_title}}</li>
+      <li v-for="(item,index) in HotBarList" class="GuessBar-li" @click="ShowWen(item.wenzhang_id)">{{item.wenzhang_title}}</li>
     </ul>
   </div>
 </template>
@@ -32,9 +32,12 @@
             this.HotBarList=res.data.result
           }
         })
+      },
+      ShowWen(id){
+        this.$emit("ShowWen",id)
       }
-    }
 
+    }
   }
 </script>
 

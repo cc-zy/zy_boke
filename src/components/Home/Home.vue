@@ -1,22 +1,20 @@
 <template>
   <div class="Home">
-    <Header v-on:Search="Search"></Header>
+    <Header used="home"></Header>
     <div class="Home-body">
-      <left-nav class="leftnav-position" :class="{leftscroll}"></left-nav>
+      <left-nav class="leftnav-position" :class="{leftscroll}" used="home"></left-nav>
       <div class="Home-body-center">
         <Carousel class="carousel-position"></Carousel>
-        <wenzhang-list class="wenzhanglist-position" ></wenzhang-list>
+        <wenzhang-list class="wenzhanglist-position" @ShowWen="ShowWenList"></wenzhang-list>
       </div>
       <div class="Home-body-right">
-        <hot-bar class="hotbar-position"></hot-bar>
-        <guess-bar class="guessbar-position"></guess-bar>
+        <hot-bar class="hotbar-position" @ShowWen="ShowWenHot"></hot-bar>
+        <guess-bar class="guessbar-position" @ShowWen="ShowWenGuess"></guess-bar>
+        <friend-ship></friend-ship>
       </div>
     </div>
     <Footer class="footer"></Footer>
-    <div class="BackTop" :class="{ScrollBackTop}" @click="GoBackTop()">
-      <img src="../../assets/backtop.png" title="返回顶部" alt=""/>
-      <p>返回顶部</p>
-    </div>
+    <back-top></back-top>
   </div>
 </template>
 
@@ -28,6 +26,8 @@
   import GuessBar from "../SubComponents/GuessBar.vue";
   import WenzhangList from "../SubComponents/WenzhangList.vue";
   import Footer from "../SubComponents/Footer.vue";
+  import FriendShip from "../SubComponents/Friendship.vue";
+  import BackTop from "../SubComponents/BackTop.vue";
   export default{
     data(){
       return {
@@ -35,7 +35,6 @@
         pageIndex:1,  //页数
         WenzhangList:[], //文章列表
         leftscroll:false,
-        ScrollBackTop:true
       }
     },
     components:{
@@ -45,46 +44,25 @@
       HotBar,
       GuessBar,
       WenzhangList,
-      Footer
+      Footer,
+      FriendShip,
+      BackTop
     },
     computed:{
 
     },
     methods:{
-      GoBackTop(){
-        window.scrollTo(0,0);
+      ShowWenList(id){
+        this.$router.push("/wenzhang/"+id)
       },
-      Search(SearchValue){
-        alert(SearchValue)
-        this.$router.push("/search");
-        const that=this;
-        if(SearchValue!=""){
-          this.axios.post('/api/youke/sousuo', {
-                 title:SearchValue,
-                 pageIndex:this.pageIndex
-          })
-          .then(function (res) {
-            that.WenzhangList=res.data.result;
-            that.$children[0].SearchValue="";
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-        }
+      ShowWenHot(id){
+        this.$router.push("/wenzhang/"+id)
       },
-      addScroll(){
-        window.addEventListener("scroll",()=>{
-
-          if(window.pageYOffset<100){
-            this.ScrollBackTop=true
-          }else if(window.pageYOffset>=100){
-            this.ScrollBackTop=false
-          }
-        })
+      ShowWenGuess(id){
+        this.$router.push("/wenzhang/"+id)
       }
     },
     created(){
-      this.addScroll()
     }
   }
 </script>
@@ -95,22 +73,51 @@
   }
 
   @media (min-width: 576px) and (max-width: 767.98px) {
-
+    .Home-body-center{
+      margin-left: 20px;
+    }
+    .leftnav-position{
+      margin-left: 10px;
+    }
+    .Home-body-right{
+      margin-left: 20px;
+    }
   }
 
   @media (min-width: 768px) and (max-width: 991.98px) {
-
+    .Home-body-center{
+      margin-left: 20px;
+    }
+    .leftnav-position{
+      margin-left: 10px;
+    }
+    .Home-body-right{
+      margin-left: 20px;
+    }
   }
 
   @media (min-width: 992px) and (max-width: 1199.98px) {
-
-       .wenzhanglist-position{
-         width: 200px;
+       .Home-body-center{
+         margin-left: 20px;
+       }
+       .leftnav-position{
+         margin-left: 100px;
+       }
+       .Home-body-right{
+         margin-left: 20px;
        }
   }
 
   @media (min-width: 1200px) {
-
+    .Home-body-center{
+      margin-left: 20px;
+    }
+    .leftnav-position{
+      margin-left: 200px;
+    }
+    .Home-body-right{
+      margin-left: 20px;
+    }
   }
 .footer{
   margin-top: 100px;
@@ -118,40 +125,15 @@
 .Home-body{
   display: flex;
 }
-.ScrollBackTop{
-  display: none;
-}
-.BackTop img{
-  width: 70%;
-  height: 100%;
-}
-.BackTop{
-  cursor: pointer;
-  position: fixed;
-  width: 80px;
-  height: 50px;
-  text-align: center;
-  bottom: 60px;
-  right: 20px;
-  font-size: 12px;
-}
-.BackTop:hover{
-  color: salmon;
-}
-.wenzhanglist-position{
-}
 
 .leftnav-position{
   margin-top: 100px;
-  margin-left: 200px;
 }
 .Home-body-center{
   margin-top: 100px;
-  margin-left: 20px;
 }
 .Home-body-right{
   margin-top: 100px;
-  margin-left: 20px;
 }
 
 </style>

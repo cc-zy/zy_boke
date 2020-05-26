@@ -23,8 +23,13 @@
         ]
       }
     },
+    props:["used"],
     methods:{
       SortBar(keywords,id,that){
+        this.$refs.li.forEach(function(item){
+          item.classList.remove("active")
+        })
+        this.$refs.li[id].classList.add("active")
         let sort;
         if(keywords=="其他"){
           sort="qita";
@@ -33,10 +38,10 @@
           sort=keywords;
           this.setSortWenzhangList(sort)
         }
-        this.$refs.li.forEach(function(item){
-          item.classList.remove("active")
-        })
-        this.$refs.li[id].classList.add("active")
+        if(this.used=="home"){
+          return;
+        }
+        this.$router.push("/home")
       },
       ...mapActions([
         "setSortWenzhangList"

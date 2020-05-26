@@ -20,7 +20,13 @@ export default new Vuex.Store({
       ],
       pageIndex:1,
       isHiddenWenzhangList:false,
-      keywords:"home" //左导航栏关键字
+      keywords:"home", //左导航栏关键字
+      isHiddenSearchWenList:true,
+      SearchWenList:[],
+      SearchpageIndex:1,
+      SValue:"",
+      isPrev:true,
+      isNext:true
     },
     mutations: {
       setWenzhangList(state,newList){
@@ -41,8 +47,16 @@ export default new Vuex.Store({
         if(state.pageIndex>1){
           state.pageIndex--;
         }
+      },
+      setSearchWenList(state,newList){
+        state.SearchWenList=newList
+      },
+      Prev(state){
+        state.SearchpageIndex--;
+      },
+      Next(state){
+        state.SearchpageIndex++;
       }
-
     },
     actions:{
       setWenzhangList({commit,state}){
@@ -113,8 +127,6 @@ export default new Vuex.Store({
                   this.dispatch('setWenzhangList')
                 }
            }else{
-               console.log("removePr"+state.pageIndex)
-               console.log("remove"+state.pageIndex)
                commit("RemovePageIndex")
                if(state.keywords!="home"){
                  this.dispatch('setSortWenzhangList', state.keywords)
@@ -123,6 +135,89 @@ export default new Vuex.Store({
                  this.dispatch('setWenzhangList')
                }
            }
+      },
+      setSearchWenList({commit,state},SearchValue){
+        state.SValue=SearchValue;
+        state.SearchpageIndex=1;
+        if(SearchValue!=""){
+          axios.post('/api/youke/sousuo', {
+                 title:SearchValue,
+                 pageIndex:state.SearchpageIndex
+          }).then(function (res) {
+            let newList=[];
+            if(res.data.status==0){
+              if(res.data.result.length){
+                state.isHiddenSearchWenList=false;
+                newList=res.data.result;
+                let index=state.SearchpageIndex*10;
+                newList.forEach((item)=>{
+                  index=index>state.WenzhangimgList.length-1?0:index;
+                  item.ImgSrc=state.WenzhangimgList[index];
+                  index++;
+                })
+                commit("setSearchWenList",newList)
+              }else{
+                 state.isHiddenSearchWenList=true;
+                 state.SearchWenList=[];
+              }
+            }else{
+              state.isHiddenSearchWenList=true;
+              state.SearchWenList=[];
+            }
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        }
+      },
+      ChangePageIndexWenList({commit,state}){
+        axios.post('/api/youke/sousuo', {
+               title:state.SValue,
+               pageIndex:state.SearchpageIndex
+        }).then(function (res) {
+          let newList=[];
+          if(res.data.status==0){
+            if(res.data.result.length){
+              state.isHiddenSearchWenList=false;
+              newList=res.data.result;
+              let index=state.SearchpageIndex*10;
+              newList.forEach((item)=>{
+                index=index>state.WenzhangimgList.length-1?0:index;
+                item.ImgSrc=state.WenzhangimgList[index];
+                index++;
+              })
+              commit("setSearchWenList",newList)
+            }else{
+               state.isHiddenSearchWenList=true;
+               state.SearchWenList=[];
+            }
+          }else{
+            state.isHiddenSearchWenList=true;
+            state.SearchWenList=[];
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+      },
+      ChangePageIndex({commit,state},data){
+        if(data=="prev"){
+          if(state.SearchpageIndex==1){
+            state.isPrev=false;
+            return;
+          }
+          state.isPrev=true;
+          commit("Prev")
+          this.dispatch("ChangePageIndexWenList")
+        }else{
+          if(state.SearchWenList.length<10){
+            state.isNext=false;
+            return;
+          }
+          state.isNext=true;
+          commit("Next")
+          this.dispatch("ChangePageIndexWenList")
+        }
       }
     }
 })

@@ -2,13 +2,13 @@
   <div class="WenzhangList d-none d-sm-block" >
     <div v-if="!isHiddenWenzhangList">
       <ul>
-        <li v-for="(item,index) in WenzhangList" class="WenzhangList-li" :key="item.wenzhang_id">
+        <li v-for="(item,index) in WenzhangList" class="WenzhangList-li" :key="item.wenzhang_id" @click="ShowWen(item.wenzhang_id)">
           <div class="WenzhangList-imgs">
             <img :src="item.ImgSrc" alt="" class="WenzhangList-img" ref="img" @mouseover="Hover(index)"/>
           </div>
           <div class="WenzhangList-Content">
             <h5 class="WenzhangList-Content-title" :title="item.wenzhang_title" ref="title" @mouseover="Hover(index)">{{item.wenzhang_title}}</h5>
-            <p class="WenzhangList-Content-content">{{item.wenzhang_id}}</p>
+            <p class="WenzhangList-Content-content">{{item.wenzhang_content}}</p>
             <span class="WenzhangList-Content-time">时间:{{item.wenzhang_create_time|TimeFormat}} </span>
             <span class="WenzhangList-Content-click">点击: {{item.wenzhang_youke_click_num}}</span>
           </div>
@@ -58,6 +58,9 @@
         })
         this.$refs.title[index].classList.add("Titles-hover")
         this.$refs.img[index].classList.add("Imgs-hover")
+      },
+      ShowWen(id){
+        this.$emit("ShowWen",id)
       }
     }
   }
@@ -88,7 +91,7 @@
 
   @media (min-width: 768px) and (max-width: 991.98px) {
       .WenzhangList-li{
-        width: 380px;
+        width: 500px;
       }
       .pageination-position,.NoMore{
         left:500px;
@@ -130,6 +133,7 @@
   border-radius: 3px;
   margin: 15px 0;
   box-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+  overflow:hidden;
 }
 .NoMore{
   width: 200px;
@@ -157,6 +161,7 @@ ul{
 }
 .WenzhangList-imgs{
   width: 160px;
+  min-width: 160px;
   height: 100%;
   max-height: 120px;
   overflow: hidden;
@@ -179,6 +184,12 @@ ul{
 }
 .WenzhangList-Content-title{
   font-size: 25px;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
 }
 .Imgs-hover{
   transform: scale(1.3);
